@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="kn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OUR COLLECTIVE | DHAMANI TEKKATE</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css?v=FORCE_BROWN">
+    
+    <style>
+        /* HUMAAN-STYLE TEAM PAGE - DARK VERSION */
+        :root {
+            --humaan-bg: #1a120e; /* Match main site bg */
+            --humaan-card-bg: #241a15;
+            --humaan-dark: #f0f2f5; /* Light text for dark bg */
+            --accent-blue: #d4af37;
+        }
+
+        body.humaan-page {
+            background-color: var(--humaan-bg);
+            color: var(--humaan-dark);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .humaan-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 140px 40px 80px;
+        }
+
+        /* Staggered Grid (Exact Humaan Match) */
+        .humaan-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2.5rem;
+            align-items: start;
+            padding-top: 2rem;
+        }
+
+        /* Col 1 Offset (Left) */
+        .humaan-col-1 { margin-top: 18rem; }
+        /* Col 2 Offset (Center) */
+        .humaan-col-2 { margin-top: 0; }
+        /* Col 3 Offset (Right) */
+        /* Column Offsets - Reduced for visibility */
+        .humaan-col-1 { margin-top: 8rem !important; } /* Reduced from 18rem */
+        .humaan-col-2 { margin-top: 0 !important; }
+        .humaan-col-3 { margin-top: 4rem !important; } /* Reduced from 8rem */
+
+        .team-card {
+            background-color: var(--humaan-bg); 
+            border-radius: 40px; 
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 2.5rem;
+            aspect-ratio: 0.85; /* Taller look */
+            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.8rem;
+            cursor: pointer;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-photo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            /* Subtly different background color for the person if needed */
+            filter: contrast(1.05) brightness(1.02);
+            transition: transform 0.8s ease;
+        }
+
+        .team-card:hover .team-photo {
+            transform: scale(1.05);
+        }
+
+        /* Label Badges */
+        .team-badges {
+            position: relative;
+            z-index: 2;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.4rem;
+            border-radius: 100px;
+            width: fit-content;
+        }
+
+        .badge-name {
+            color: #fff;
+            padding: 0.6rem 1.4rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* BRAND ACCENT COLORS FOR NAMES */
+        .name-gold { background-color: #5d4a1e; }
+        .name-amber { background-color: #723c14; }
+        .name-red { background-color: #44140a; }
+        .name-green { background-color: #1a2e1c; }
+
+        .badge-role {
+            background-color: transparent; /* screenshot shows text on card background */
+            color: var(--humaan-dark);
+            padding: 0 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        /* Typography */
+        .page-header {
+            margin-bottom: 5rem;
+            text-align: left;
+        }
+
+        .page-header h1 {
+            font-family: 'Lora', serif;
+            font-size: 1.8rem; /* Dramatically reduced */
+            color: #fff;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            letter-spacing: 0.02em;
+        }
+
+        /* FORCE VISIBILITY - Remove animations */
+        .reveal, .reveal-up, .reveal-scale, .reveal-blur, .reveal-scene {
+            opacity: 1 !important;
+            transform: none !important;
+            filter: none !important;
+            transition: none !important;
+            animation: none !important;
+            visibility: visible !important;
+        }
+
+        /* Reduce column offsets to keep content above the fold */
+        .humaan-col-1 { margin-top: 4rem !important; }
+        .humaan-col-2 { margin-top: 0 !important; }
+        .humaan-col-3 { margin-top: 2rem !important; }
+
+
+        /* Label Badges - Precise Match */
+        .team-badges {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent !important;
+            padding: 0;
+            border-radius: 100px;
+            width: fit-content;
+        }
+
+        .badge-name {
+            color: #fff;
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.75rem; /* Reduced */
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            display: inline-flex;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .badge-role {
+            background-color: #fff;
+            color: #000;
+            padding: 0.5rem 1.2rem;
+            border-radius: 100px;
+            font-size: 0.75rem; /* Reduced */
+            font-weight: 600;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: #fff !important;
+            padding: 5rem 0 !important;
+            color: #444 !important;
+            border-top: 1px solid #eee !important;
+        }
+
+        @media (max-width: 768px) {
+            .humaan-grid { grid-template-columns: 1fr; }
+            .humaan-grid > div:nth-child(even) { margin-top: 0; }
+            .page-header h1 { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body class="inner-page humaan-page">
+    <div class="noise-overlay" style="opacity: 0.02;"></div>
+    
+    <div class="container">
+        <!-- NAVIGATION RETURN -->
+        <div style="position:fixed; top:2rem; left:2rem; z-index:100;">
+            <a href="index.html#works" class="btn-theatrical" style="padding: 0.8rem 1.4rem; font-size: 0.75rem;"><i class="fa-solid fa-arrow-left"></i> <span data-t="nav_home">BACK</span></a>
+        </div>
+        <!-- GLOBAL PILL NAVIGATION -->
+        <nav class="navbar-fixed">
+            <div class="nav-links">
+                <a href="index.html">
+                    <span class="nav-symbol"><i class="fa-solid fa-house"></i></span>
+                    <span class="nav-text">Home</span>
+                </a>
+                <a href="index.html#calendar">
+                    <span class="nav-symbol"><i class="fa-solid fa-calendar-days"></i></span>
+                    <span class="nav-text">Calendar</span>
+                </a>
+                <a href="index.html#works">
+                    <span class="nav-symbol"><i class="fa-solid fa-masks-theater"></i></span>
+                    <span class="nav-text">Works</span>
+                </a>
+                <a href="index.html#print">
+                    <span class="nav-symbol"><i class="fa-solid fa-newspaper"></i></span>
+                    <span class="nav-text">Print</span>
+                </a>
+                <a href="index.html#gallery">
+                    <span class="nav-symbol"><i class="fa-solid fa-images"></i></span>
+                    <span class="nav-text">Gallery</span>
+                </a>
+                <a href="index.html#about">
+                    <span class="nav-symbol"><i class="fa-solid fa-circle-info"></i></span>
+                    <span class="nav-text">About</span>
+                </a>
+                <a href="team.html" class="active">
+                    <span class="nav-symbol"><i class="fa-solid fa-users"></i></span>
+                    <span class="nav-text">Team</span>
+                </a>
+            </div>
+        </nav>
+        <main class="humaan-wrapper">
+            <header class="page-header reveal-up">
+                <h1>OUR TEAM</h1>
+            </header>
+
+            <div class="humaan-grid reveal-scale">
+                <!-- COLUMN 1: LEFT -->
+                <div class="humaan-col-1">
+                    <div class="team-card">
+                        <img src="Sulochana.jpeg" alt="Sulochana" class="team-photo">
+                        <div class="team-badges">
+                            <span class="badge-name name-amber">Sulochana</span>
+                            <span class="badge-role">President</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 2: CENTER -->
+                <div class="humaan-col-2">
+                    <div class="team-card">
+                        <img src="Ranjth.jpeg" alt="Ranjith Shetty" class="team-photo">
+                        <div class="team-badges">
+                            <span class="badge-name name-green">Ranjith</span>
+                            <span class="badge-role">Member</span>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <img src="Shreesha (1).jpeg" alt="Shreesha Thekkatte" class="team-photo">
+                        <div class="team-badges">
+                            <span class="badge-name name-gold">Shreesha</span>
+                            <span class="badge-role">Secretary</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 3: RIGHT -->
+                <div class="humaan-col-3">
+                    <div class="team-card">
+                        <img src="Vijith.jpeg" alt="Vijith" class="team-photo">
+                        <div class="team-badges">
+                            <span class="badge-name name-red">Vijith</span>
+                            <span class="badge-role">Member</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+
+    </div>
+    
+    <!-- TYPEWRITER ANNOUNCEMENT -->
+    <div id="home-announcement" class="typewriter-popup">
+        <p id="typewriter-content" class="typewriter-p"></p>
+        <a id="typewriter-link" href="index.html#connect" class="typewriter-link" style="opacity:0;" data-t="type_link">CONNECT</a>
+    </div>
+
+    <!-- EXIT DONATION POPUP -->
+    <div id="exit-popup" class="modal-overlay">
+        <div class="modal-card-unified donation-exit-card">
+            <button id="close-exit" class="modal-close" onclick="closePopup('exit-popup')">&times;</button>
+            <div class="exit-header">
+                <span class="exit-subtitle" data-t="exit_subtitle">A HUMBLE REQUEST</span>
+                <h2 class="exit-title" data-t="exit_title">SUPPORT OUR STAGE</h2>
+                <p class="exit-description" data-t="exit_desc">Your support keeps the flame alive.</p>
+            </div>
+            
+            <div class="exit-qr-container">
+                <img src="donation-qr.jpg" alt="Donation QR" class="exit-qr-image">
+                <span class="exit-qr-label" data-t="exit_scan">[ SCAN TO DONATE ]</span>
+            </div>
+
+            <div class="exit-actions">
+                <button class="btn-theatrical exit-btn primary-exit" data-t="btn_donated" onclick="closePopup('exit-popup')">I HAVE DONATED</button>
+                <button class="btn-theatrical exit-btn secondary-exit" data-t="btn_later" onclick="closePopup('exit-popup')">MAYBE LATER</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Adjust reveal animations for the new layout
+        window.addEventListener('scroll', () => {
+            const reveals = document.querySelectorAll('.reveal-up, .reveal-scale');
+            reveals.forEach(r => {
+                const windowHeight = window.innerHeight;
+                const revealTop = r.getBoundingClientRect().top;
+                if (revealTop < windowHeight - 50) {
+                    r.classList.add('active');
+                }
+            });
+        });
+        // Initial check
+        window.dispatchEvent(new Event('scroll'));
+    </script>
+</body>
+</html>
+

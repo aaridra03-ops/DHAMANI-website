@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHIGURU | DHAMANI TEKKATE</title>
+    <!-- THEATRICAL FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/MotionPathPlugin.min.js"></script>
+    <style>
+        .chiguru-content-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 8rem 40px;
+        }
+
+        .play-title {
+            font-size: 3.5rem;
+            color: var(--accent-gold);
+            font-family: var(--font-theatrical);
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+        }
+
+        .play-director {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: var(--accent-amber);
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .play-about {
+            max-width: 700px;
+            line-height: 2;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 4rem;
+        }
+
+        .artist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 1.5rem;
+            max-width: 700px;
+            margin-top: 3rem;
+        }
+
+        .artist-frame {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            margin: 0 auto 0.8rem;
+            transition: all 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .artist-frame.placeholder-frame {
+            background: #111;
+            border: 1px dashed var(--accent-gold);
+            font-size: 1.8rem;
+            color: rgba(212, 175, 55, 0.4);
+        }
+
+        .artist-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(0.2);
+        }
+
+        .artist-name {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            font-family: var(--font-theatrical);
+            letter-spacing: 0.05em;
+            white-space: nowrap;
+        }
+
+        .play-credits {
+            list-style: none;
+            padding: 2rem 0;
+            margin: 2rem 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.1);
+            text-align: left;
+        }
+
+        .credit-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: var(--accent-gold);
+            opacity: 0.7;
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        .credit-value {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            font-family: 'Lora', serif;
+        }
+
+        /* --- GHAT SECTION ROUTE MAP --- */
+        .play-container-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6rem;
+            align-items: start;
+            margin-bottom: 25rem;
+        }
+
+        .route-map-surface {
+            position: sticky;
+            top: 10vh;
+            height: 1000px;
+            width: 100%;
+        }
+
+        .ghat-svg-container {
+            position: absolute;
+            inset: 0;
+        }
+
+        .ghat-svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+
+        .ghat-road-base {
+            fill: none;
+            stroke: #1a1a1a;
+            stroke-width: 24;
+            stroke-linecap: round;
+        }
+
+        .ghat-road-markings {
+            fill: none;
+            stroke: var(--accent-gold);
+            stroke-width: 1.5;
+            stroke-dasharray: 10 15;
+            opacity: 0.5;
+        }
+
+        /* THEATRE AUTO (SIDE VIEW) */
+        .theatre-auto {
+            position: absolute;
+            width: 80px;
+            height: 50px;
+            z-index: 100;
+            offset-anchor: center;
+            /* TOP VIEW: FOLLOW PATH ROTATION */
+            offset-rotate: auto 90deg;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* Top View Auto Design */
+        .auto-body-top {
+            position: relative;
+            width: 100px;
+            height: 68px;
+            background: #0c0c0c;
+            border: 2px solid var(--accent-gold);
+            border-radius: 15px 40px 40px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            /* Rotation handled by GSAP MotionPath autoRotate */
+        }
+
+        .auto-label-top {
+            position: absolute;
+            font-size: 13px;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 0 5px var(--accent-gold), 0 0 10px var(--accent-gold);
+            letter-spacing: 0.15em;
+            pointer-events: none;
+            z-index: 10;
+            transform: rotate(180deg);
+        }
+
+        .theatre-auto.is-paused .auto-label-top {
+            font-size: 15px;
+            text-shadow: 0 0 10px #fff, 0 0 20px var(--accent-gold);
+        }
+
+        .auto-roof-top {
+            width: 65px;
+            height: 52px;
+            background: #1a1a1a;
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            border-radius: 10px 25px 25px 10px;
+        }
+
+        .auto-light-top {
+            position: absolute;
+            right: -8px;
+            width: 8px;
+            height: 12px;
+            background: #fff;
+            border-radius: 2px;
+            box-shadow: 10px 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .top-wheel {
+            position: absolute;
+            width: 22px;
+            height: 10px;
+            background: #000;
+            border: 1px solid var(--accent-gold);
+            border-radius: 2px;
+        }
+
+        .wheel-tl {
+            top: -8px;
+            left: 18px;
+        }
+
+        .wheel-bl {
+            bottom: -8px;
+            left: 18px;
+        }
+
+        .wheel-front-top {
+            right: 12px;
+            width: 20px;
+            height: 24px;
+            border-radius: 3px;
+        }
+
+        @keyframes wheel-spin {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .auto-label {
+            font-family: 'Cinzel', serif;
+            font-size: 0.6rem;
+            color: var(--accent-gold);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+        }
+
+        @keyframes auto-ghat-travel {
+            0% {
+                offset-distance: 0%;
+                opacity: 1;
+            }
+
+            100% {
+                offset-distance: 100%;
+                opacity: 1;
+            }
+        }
+
+        /* GHAT STOPS (DIAGONAL S-CURVE ALIGNMENT) */
+        .ghat-stop {
+            position: absolute;
+            opacity: 0.35;
+            transition: all 0.6s ease;
+            text-align: left;
+        }
+
+        .ghat-stop:hover {
+            opacity: 1;
+            transform: scale(1.1) translateX(10px);
+        }
+
+        /* Positioning stops along the WINDING PATH (Recalibrated to avoid road overlap) */
+        .stop-p1-1 {
+            top: 7%;
+            right: 5%;
+            left: auto;
+            text-align: right;
+        }
+
+        .stop-p1-2 {
+            top: 25%;
+            left: 5%;
+            right: auto;
+            text-align: left;
+        }
+
+        .stop-p1-3 {
+            top: 48%;
+            right: 5%;
+            left: auto;
+            text-align: right;
+        }
+
+        .stop-p1-4 {
+            top: 92%;
+            left: 15%;
+            right: auto;
+            text-align: left;
+        }
+
+        /* Stops for Path 2 */
+        .stop-p2-1 {
+            top: 5%;
+            right: 5%;
+            left: auto;
+            text-align: right;
+        }
+
+        .stop-p2-2 {
+            top: 22%;
+            left: 5%;
+            right: auto;
+            text-align: left;
+        }
+
+        .stop-p2-3 {
+            top: 42%;
+            right: 5%;
+            left: auto;
+            text-align: right;
+        }
+
+        .stop-p2-4 {
+            top: 62%;
+            left: 5%;
+            right: auto;
+            text-align: left;
+        }
+
+        .stop-p2-5 {
+            top: 92%;
+            right: 15%;
+            left: auto;
+            text-align: right;
+        }
+
+        .ghat-stop .stop-dot {
+            width: 14px;
+            height: 14px;
+            background: var(--bg-primary);
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 15px rgba(212, 163, 115, 0.3);
+        }
+
+        .ghat-stop:hover .stop-dot {
+            background: var(--accent-gold);
+            box-shadow: 0 0 25px var(--accent-gold);
+        }
+
+        .stop-date {
+            display: block;
+            font-size: 0.7rem;
+            letter-spacing: 0.4em;
+            color: var(--accent-gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .stop-location {
+            display: block;
+            font-family: 'Lora', serif;
+            font-size: 1.45rem;
+            color: var(--text-primary);
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 1100px) {
+            .play-container-grid {
+                grid-template-columns: 1fr;
+                margin-bottom: 10rem;
+            }
+
+            .route-map-surface {
+                position: relative;
+                height: 800px;
+                margin-top: 5rem;
+            }
+
+            .ghat-svg {
+                transform: scale(0.7);
+                transform-origin: top left;
+            }
+
+            .theatre-auto {
+                animation-duration: 40s;
+            }
+
+            /* Mobile path adjustment is handled by the same path but scaled svg */
+        }
+
+        /* VIEW PHOTOS BUTTON */
+        .btn-view-photos {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-top: 2.5rem;
+            padding: 0.85rem 2.2rem;
+            background: transparent;
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+            font-family: var(--font-theatrical);
+            font-size: 0.8rem;
+            letter-spacing: 0.25em;
+            text-decoration: none;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .btn-view-photos::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--accent-gold);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            z-index: 0;
+        }
+
+        .btn-view-photos:hover::before {
+            transform: scaleX(1);
+        }
+
+        .btn-view-photos:hover {
+            color: #0a0a0a;
+            box-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-view-photos span,
+        .btn-view-photos i {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body class="uthsava-page inner-page">
+    <div class="uthsava-canvas"></div>
+    <div class="gold-particles"></div>
+    <div class="noise-overlay"></div>
+
+    <div style="position:fixed; top:2rem; left:2rem; z-index:100;">
+        <a href="index.html#works" class="btn-theatrical"><i class="fa-solid fa-arrow-left"></i> <span
+                data-t="nav_home">BACK</span></a>
+    </div>
+
+    <div class="chiguru-content-wrapper">
+
+        <!-- PRODUCTION 1: SOORYA BANDA -->
+        <div class="play-container-grid reveal-up active">
+            <div class="play-content-side">
+                <h1 class="play-title" data-t="sb_title">SOORYA BANDA</h1>
+                <span class="play-director" data-t="sb_dir">Directed by Ranjith Shetty Kukkude</span>
+                <p class="play-about" data-t="sb_desc">
+                    "Soorya Banda" (The Sun Arrives) is a profound exploration of hope and dawn in the human psyche.
+                    Through a blend of traditional folklore and experimental stagecraft, it tells the story of a village
+                    waiting for a light that never fades.
+                </p>
+                <div class="play-credits">
+                    <div class="credit-item"><span class="credit-label" data-t="c_rachane">WRITER</span><span
+                            class="credit-value" data-t="sb_rachane">Vaidehi</span></div>
+                    <div class="credit-item"><span class="credit-label" data-t="c_direction">Direction</span><span
+                            class="credit-value" data-t="sb_dir_name">Ranjith Shetty Kukkude</span></div>
+                    <div class="credit-item"><span class="credit-label" data-t="c_music">Music</span><span
+                            class="credit-value" data-t="sb_music">Roshan S Baikady</span></div>
+                    <div class="credit-item"><span class="credit-label" data-t="c_light">Light</span><span
+                            class="credit-value" data-t="sb_light">Shreesha Thekkatte</span></div>
+                </div>
+                <a href="index.html#gallery-sb-grid" class="btn-view-photos">
+                    <i class="fa-solid fa-images"></i>
+                    <span data-t="btn_view_photos">VIEW PHOTOS</span>
+                </a>
+            </div>
+
+            <aside class="route-map-surface">
+                <div class="ghat-svg-container">
+                    <svg class="ghat-svg" viewBox="0 -50 600 1100">
+                        <path id="route-path-1" class="ghat-road-base"
+                            d="M 550 10 C 500 110, 100 110, 100 210 C 100 310, 500 310, 500 410 C 500 510, 100 510, 100 610 C 100 710, 500 710, 500 810 C 500 860, 30 860, 30 910" />
+                        <path class="ghat-road-markings"
+                            d="M 550 10 C 500 110, 100 110, 100 210 C 100 310, 500 310, 500 410 C 500 510, 100 510, 100 610 C 100 710, 500 710, 500 810 C 500 860, 30 860, 30 910" />
+                    </svg>
+                    <!-- AUTO 1 -->
+                    <div class="theatre-auto auto-1">
+                        <div class="auto-body-top">
+                            <span class="auto-label-top">DHAMANI</span>
+                            <div class="auto-roof-top"></div>
+                            <div class="auto-light-top"></div>
+                            <div class="top-wheel wheel-tl"></div>
+                            <div class="top-wheel wheel-bl"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="route-stops-container">
+                    <div class="ghat-stop stop-p1-1">
+                        <div class="stop-dot"></div><span class="stop-date">17.07.2024</span><span
+                            class="stop-location">Thekkatte</span>
+                    </div>
+                    <div class="ghat-stop stop-p1-2">
+                        <div class="stop-dot"></div><span class="stop-date">03.12.2024</span><span
+                            class="stop-location">Thekkatte</span>
+                    </div>
+                    <div class="ghat-stop stop-p1-3">
+                        <div class="stop-dot"></div><span class="stop-date">05.04.2025</span><span
+                            class="stop-location">Brahmavara</span>
+                    </div>
+                    <div class="ghat-stop stop-p1-4">
+                        <div class="stop-dot"></div><span class="stop-date">16.04.2025</span><span
+                            class="stop-location">Shivamogga</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- PRODUCTION 2: SOORYA CHANDRA -->
+        <div class="play-container-grid reveal-up active">
+            <div class="play-content-side">
+                <h1 class="play-title" data-t="sc_title">SOORYA CHANDRA</h1>
+                <span class="play-director" data-t="sc_dir">Directed by Rohith S Baikady</span>
+                <p class="play-about" data-t="sc_desc">
+                    A dialogue between the celestial and the mortal, "Soorya Chandra" is a visual spectacle
+                    of duality. Weaving together shadow play and intense dramatic movement, it portrays the eternal
+                    dance
+                    of light and shade.
+                </p>
+                <div class="play-credits">
+                    <div class="credit-item"><span class="credit-label" data-t="c_rachane">WRITER</span><span
+                            class="credit-value" data-t="sc_rachane">Dr. Shivarama Karantha</span></div>
+                    <div class="credit-item"><span class="credit-label" data-t="c_direction">Direction</span><span
+                            class="credit-value" data-t="sc_dir_name">Rohith S Baikady</span></div>
+                    <div class="credit-item"><span class="credit-label" data-t="c_music">Music</span><span
+                            class="credit-value" data-t="sc_music">Shubhakar Puttur</span></div>
+                    <div class="credit-item"><span class="credit-label" data-t="c_light_des">Light Designer</span><span
+                            class="credit-value" data-t="sc_light">Shreesha Thekkatte</span></div>
+                </div>
+                <div class="artist-grid">
+                    <!-- Ensemble -->
+                    <div class="artist-item">
+                        <div class="artist-frame placeholder-frame"><i class="fa-solid fa-user"></i></div><span
+                            class="artist-name">Harshitha</span>
+                    </div>
+                    <div class="artist-item">
+                        <div class="artist-frame placeholder-frame"><i class="fa-solid fa-user"></i></div><span
+                            class="artist-name">Poorvi</span>
+                    </div>
+                    <div class="artist-item">
+                        <div class="artist-frame placeholder-frame"><i class="fa-solid fa-user"></i></div><span
+                            class="artist-name">Vigna Raj</span>
+                    </div>
+                    <div class="artist-item">
+                        <div class="artist-frame placeholder-frame"><i class="fa-solid fa-user"></i></div><span
+                            class="artist-name">Vidya Lakshmi</span>
+                    </div>
+                    <div class="artist-item">
+                        <div class="artist-frame placeholder-frame"><i class="fa-solid fa-user"></i></div><span
+                            class="artist-name">Advik</span>
+                    </div>
+                    <div class="artist-item">
+                        <div class="artist-frame placeholder-frame"><i class="fa-solid fa-user"></i></div><span
+                            class="artist-name">Atharva</span>
+                    </div>
+                    <div class="artist-item">
+                        <div class="artist-frame placeholder-frame"><i class="fa-solid fa-user"></i></div><span
+                            class="artist-name">Prajna</span>
+                    </div>
+                    <div class="artist-item">
+                        <div class="artist-frame placeholder-frame"><i class="fa-solid fa-user"></i></div><span
+                            class="artist-name">Anusha</span>
+                    </div>
+                    <div class="artist-item">
+                        <div class="artist-frame placeholder-frame"><i class="fa-solid fa-user"></i></div><span
+                            class="artist-name">Khushi</span>
+                    </div>
+                    <div class="artist-item">
+                        <div class="artist-frame placeholder-frame"><i class="fa-solid fa-user"></i></div><span
+                            class="artist-name">Shreejith</span>
+                    </div>
+                    <div class="artist-item">
+                        <div class="artist-frame placeholder-frame"><i class="fa-solid fa-user"></i></div><span
+                            class="artist-name">Thrupthi</span>
+                    </div>
+                </div>
+                <a href="index.html#gallery-sc-grid" class="btn-view-photos">
+                    <i class="fa-solid fa-images"></i>
+                    <span data-t="btn_view_photos">VIEW PHOTOS</span>
+                </a>
+            </div>
+
+            <aside class="route-map-surface">
+                <div class="ghat-svg-container">
+                    <svg class="ghat-svg" viewBox="0 -50 600 1100">
+                        <path id="route-path-2" class="ghat-road-base"
+                            d="M 550 10 C 500 110, 100 110, 100 210 C 100 310, 500 310, 500 410 C 500 510, 100 510, 100 610 C 100 710, 500 710, 500 810 C 500 860, 60 860, 60 930" />
+                        <path class="ghat-road-markings"
+                            d="M 550 10 C 500 110, 100 110, 100 210 C 100 310, 500 310, 500 410 C 500 510, 100 510, 100 610 C 100 710, 500 710, 500 810 C 500 860, 60 860, 60 930" />
+                    </svg>
+                    <!-- AUTO 2 -->
+                    <div class="theatre-auto auto-2">
+                        <div class="auto-body-top">
+                            <span class="auto-label-top">DHAMANI</span>
+                            <div class="auto-roof-top"></div>
+                            <div class="auto-light-top"></div>
+                            <div class="top-wheel wheel-tl"></div>
+                            <div class="top-wheel wheel-bl"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="route-stops-container">
+                    <div class="ghat-stop stop-p2-1">
+                        <div class="stop-dot"></div><span class="stop-date">31.05.2025</span><span
+                            class="stop-location">Thekkatte</span>
+                    </div>
+                    <div class="ghat-stop stop-p2-2">
+                        <div class="stop-dot"></div><span class="stop-date">14.01.2026</span><span
+                            class="stop-location">Mysuru (Bahuroopi)</span>
+                    </div>
+                    <div class="ghat-stop stop-p2-3">
+                        <div class="stop-dot"></div><span class="stop-date">25.04.2026</span><span
+                            class="stop-location">Mangalore (St Aloysius)</span>
+                    </div>
+                    <div class="ghat-stop stop-p2-4">
+                        <div class="stop-dot"></div><span class="stop-date">28.04.2026</span><span
+                            class="stop-location">Shivamogga Rangayana</span>
+                    </div>
+                    <div class="ghat-stop stop-p2-5">
+                        <div class="stop-dot"></div><span class="stop-date">03.05.2026</span><span
+                            class="stop-location">Subrahmanya</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div style="text-align: center; margin-top: 15rem;">
+            <a href="index.html#gallery" class="gallery-cta"><span data-t="btn_view_gallery">WANNA SEE MORE CLICKS?
+                    CLICK HERE</span> <i class="fa-solid fa-camera"></i></a>
+        </div>
+    </div>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+
+        function initMouseScrub(autoSelector, pathId, mapSurfaceSelector) {
+            const tl = gsap.timeline({ paused: true });
+            tl.to(autoSelector, {
+                motionPath: {
+                    path: pathId,
+                    align: pathId,
+                    autoRotate: true,
+                    alignOrigin: [0.5, 0.5]
+                },
+                duration: 1,
+                ease: "none"
+            });
+
+            const mapSurface = document.querySelector(mapSurfaceSelector);
+            if (!mapSurface) return;
+
+            mapSurface.addEventListener('mousemove', (e) => {
+                const rect = mapSurface.getBoundingClientRect();
+                const progress = (e.clientY - rect.top) / rect.height;
+                gsap.to(tl, {
+                    progress: Math.max(0, Math.min(1, progress)),
+                    duration: 0.5,
+                    ease: "power2.out",
+                    overwrite: true
+                });
+            });
+
+            mapSurface.addEventListener('mouseleave', () => {
+                gsap.to(tl, {
+                    progress: 0,
+                    duration: 0.8,
+                    ease: "power2.inOut",
+                    overwrite: true
+                });
+            });
+
+            // Initial position (Start at the top)
+            gsap.set(tl, { progress: 0 });
+        }
+
+        // Initialize scrubbing for both production maps
+        initMouseScrub(".auto-1", "#route-path-1", ".play-container-grid:nth-of-type(1) .route-map-surface");
+        initMouseScrub(".auto-2", "#route-path-2", ".play-container-grid:nth-of-type(2) .route-map-surface");
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

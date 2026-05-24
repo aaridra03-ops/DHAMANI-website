@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UTHSAVA | DHAMANI TEKKATE</title>
+    <!-- THEATRICAL FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --uthsava-bg: #0B0B0B;
+            --uthsava-text: #F5F5F5;
+            --uthsava-gold: #D4A373;
+            --uthsava-card-bg: #121212;
+        }
+
+        body.uthsava-page {
+            background: var(--uthsava-bg);
+            color: var(--uthsava-text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- THEATRICAL BACKGROUND ELEMENTS --- */
+        .uthsava-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle at top, rgba(212, 163, 115, 0.08) 0%, transparent 70%);
+        }
+
+        /* Particles */
+        .gold-particles {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            mix-blend-mode: overlay;
+        }
+
+        /* --- HEADER SECTION --- */
+        .uthsava-header {
+            padding: 12rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .uthsava-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            color: var(--uthsava-gold);
+            letter-spacing: 0.4em;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .uthsava-subtitle {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            color: var(--uthsava-text);
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .uthsava-desc {
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+            opacity: 0.6;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        /* --- TIMELINE --- */
+        .timeline-wrapper {
+            position: relative;
+            max-width: 1100px;
+            margin: 4rem auto 15rem;
+            padding: 2rem;
+            z-index: 10;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--uthsava-gold), transparent);
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px var(--uthsava-gold);
+        }
+
+        .timeline-item {
+            margin-bottom: 12rem;
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .timeline-card {
+            width: 100%;
+            max-width: 480px;
+            /* Bit wider to accommodate the text */
+            background: var(--uthsava-card-bg);
+            border: 1px solid rgba(212, 163, 115, 0.12);
+            border-radius: 16px;
+            padding: 2.8rem;
+            position: relative;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            text-align: center !important;
+            /* Forces all inner text to flow from the center */
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #D4A373, transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .timeline-card:hover {
+            border-color: rgba(212, 163, 115, 0.35);
+            transform: translateY(-4px);
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 163, 115, 0.06);
+        }
+
+        .timeline-card:hover::before {
+            opacity: 1;
+        }
+
+        .event-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-num {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            color: rgba(212, 163, 115, 0.15);
+            line-height: 1;
+            font-weight: 600;
+            flex-shrink: 0;
+            transition: color 0.4s ease;
+        }
+
+        .timeline-card:hover .event-num {
+            color: rgba(212, 163, 115, 0.35);
+        }
+
+        .event-header-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .event-tag {
+            font-size: 0.6rem;
+            letter-spacing: 0.3em;
+            color: #D4A373;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            margin: 0 0 0.3rem;
+        }
+
+        .event-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            color: #F5F5F5;
+            margin: 0 0 0.25rem;
+            letter-spacing: 0.08em;
+        }
+
+        .event-date {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 0.85rem;
+            color: rgba(212, 163, 115, 0.6);
+            display: block;
+        }
+
+        .event-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, rgba(212, 163, 115, 0.15), transparent);
+            margin: 1.4rem 0;
+        }
+
+        .event-body {
+            line-height: 1.8;
+            font-size: 0.9rem;
+            color: rgba(245, 245, 245, 0.65);
+        }
+
+        .event-kn {
+            font-family: 'Noto Sans Kannada', sans-serif;
+            margin-top: 1rem;
+            display: block;
+            border-left: 2px solid var(--uthsava-gold);
+            padding-left: 1rem;
+            color: var(--uthsava-gold);
+            font-size: 1rem;
+        }
+
+        .event-image-container {
+            width: 45%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s ease;
+        }
+
+        .event-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(0.5);
+            transition: all 0.8s ease;
+        }
+
+        .event-image-container:hover .event-img {
+            filter: grayscale(0);
+            transform: scale(1.1);
+        }
+
+        /* ALTERNATING SIDES */
+        .timeline-item.left {
+            justify-content: flex-start;
+        }
+
+        .timeline-item.right {
+            justify-content: flex-end;
+        }
+
+        .timeline-item.left .event-image-container {
+            position: absolute;
+            right: 0;
+        }
+
+        .timeline-item.right .event-image-container {
+            position: absolute;
+            left: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 2.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--uthsava-gold);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            box-shadow: 0 0 15px var(--uthsava-gold);
+        }
+
+        @media (max-width: 900px) {
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .timeline-card {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+                max-width: 100%;
+            }
+
+            .timeline-item.left,
+            .timeline-item.right {
+                justify-content: flex-start;
+            }
+
+            .event-image-container {
+                position: relative !important;
+                width: 100% !important;
+                margin-top: 1.5rem;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 8rem;
+            }
+        }
+
+        /* ═══ MUNNUDI CAROUSEL ═══ */
+        .munnudi-carousel-wrap {
+            position: absolute;
+            right: 0;
+            overflow: hidden;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            box-shadow: 0 0 0 1px rgba(212, 163, 115, 0.06),
+                0 15px 40px rgba(0, 0, 0, 0.6),
+                0 0 30px rgba(212, 163, 115, 0.07);
+            background: #0d0d0d;
+            cursor: pointer;
+            transition: box-shadow 0.4s ease;
+            aspect-ratio: 4/3;
+            /* Fixed missing height on desktop! */
+        }
+
+        .munnudi-carousel-wrap:hover {
+            box-shadow: 0 0 0 1px rgba(212, 163, 115, 0.2),
+                0 20px 50px rgba(0, 0, 0, 0.7),
+                0 0 50px rgba(212, 163, 115, 0.13);
+        }
+
+        .mc-slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+
+        .mc-slide.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .mc-img-wrap {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .mc-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* displays exact image without cropping */
+            object-position: center;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: grayscale(0.3);
+            background: #0d0d0d;
+            /* Provides solid dark background for letterboxing */
+        }
+
+        /* Zoom on hover of active slide */
+        .munnudi-carousel-wrap:hover .mc-slide.active .mc-img {
+            transform: scale(1.05);
+            filter: grayscale(0);
+        }
+
+        .mc-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                    rgba(0, 0, 0, 0.02) 0%,
+                    rgba(0, 0, 0, 0.12) 60%,
+                    rgba(0, 0, 0, 0.45) 100%);
+            pointer-events: none;
+        }
+
+        /* Arrows */
+        .mc-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(212, 163, 115, 0.35);
+            color: #D4A373;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 0.3s ease, background 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .mc-arrow:hover {
+            background: rgba(212, 163, 115, 0.2);
+            border-color: #D4A373;
+        }
+
+        .mc-prev {
+            left: 0.8rem;
+        }
+
+        .mc-next {
+            right: 0.8rem;
+        }
+
+        .munnudi-carousel-wrap:hover .mc-arrow {
+            opacity: 1;
+        }
+
+        .mc-prev:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .mc-next:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Dots */
+        .mc-dots {
+            position: absolute;
+            bottom: 0.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 20;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .munnudi-carousel-wrap:hover .mc-dots {
+            opacity: 1;
+        }
+
+        .mc-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(212, 163, 115, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0;
+        }
+
+        .mc-dot.active {
+            background: #D4A373;
+            border-color: #D4A373;
+            box-shadow: 0 0 6px rgba(212, 163, 115, 0.7);
+            transform: scale(1.3);
+        }
+
+        @media (max-width: 900px) {
+            .munnudi-carousel-wrap {
+                position: relative !important;
+                right: auto !important;
+                width: 100% !important;
+                aspect-ratio: 4/3;
+                border-radius: 10px;
+            }
+
+            .mc-arrow {
+                opacity: 0.7;
+            }
+
+            .mc-dots {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="uthsava-page smooth-scroll inner-page">
+    <div class="scroll-thread"></div>
+    <div class="cursor-spotlight"></div>
+    <div class="page-transition-overlay"></div>
+    <div class="uthsava-canvas"></div>
+    <div class="gold-particles"></div>
+    <div class="noise-overlay"></div>
+
+    <!-- NAVIGATION RETURN -->
+    <div style="position:fixed; top:2rem; left:2rem; z-index:100;">
+        <a href="index.html#works" class="btn-theatrical"
+            style="padding: 0.8rem 1.4rem; font-size: 0.75rem; background: rgba(0,0,0,0.6); border-color: var(--uthsava-gold); color: var(--uthsava-gold);">
+            <i class="fa-solid fa-arrow-left"></i> <span data-t="nav_home">BACK</span>
+        </a>
+    </div>
+
+    <!-- TOP SECTION -->
+    <div class="uthsava-header">
+        <h1 class="uthsava-title reveal-blur" data-t="work_uthsava">UTHSAVA</h1>
+        <span class="uthsava-subtitle" data-t="uthsava_subtitle">Our Annual Cultural Celebration</span>
+    </div>
+
+    <!-- TIMELINE SECTION -->
+    <div class="timeline-wrapper">
+        <div class="timeline-line"></div>
+
+        <!-- 1. MUNNUDI -->
+        <div class="timeline-item left reveal-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <div class="event-header">
+                    <div class="event-header-inner">
+                        <p class="event-tag">INAUGURAL PROGRAMME</p>
+                        <h2 class="event-title" data-t="u_event1_title">MUNNUDI</h2>
+                        <span class="event-date" data-t="u_event1_date">04 February, 2024</span>
+                    </div>
+                </div>
+                <div class="event-divider"></div>
+                <div class="event-body">
+                    <span data-t="u_event1_text">Munnudi marked the beginning of Uthsava. Canara College students
+                        performed 'Shoorpanakhaayana'.</span>
+                </div>
+            </div>
+            <!-- MUNNUDI IMAGE CAROUSEL -->
+            <div class="event-image-container munnudi-carousel-wrap" id="munnudiCarousel">
+                <!-- Slides -->
+                <div class="mc-slide active">
+                    <div class="mc-img-wrap">
+                        <img src="MUNNUDI/1.jpg" alt="Munnudi IMG 1" class="mc-img" onerror="this.src='A3-1.jpg'">
+                        <div class="mc-overlay"></div>
+                    </div>
+                </div>
+                <div class="mc-slide">
+                    <div class="mc-img-wrap">
+                        <img src="MUNNUDI/2.jpg" alt="Munnudi IMG 2" class="mc-img" onerror="this.src='A3-1.jpg'">
+                        <div class="mc-overlay"></div>
+                    </div>
+                </div>
+                <div class="mc-slide">
+                    <div class="mc-img-wrap">
+                        <img src="MUNNUDI/3.jpg" alt="Munnudi IMG 3" class="mc-img" onerror="this.src='A3-1.jpg'">
+                        <div class="mc-overlay"></div>
+                    </div>
+                </div>
+                <div class="mc-slide">
+                    <div class="mc-img-wrap">
+                        <img src="MUNNUDI/4.jpg" alt="Munnudi IMG 4" class="mc-img" onerror="this.src='A3-1.jpg'">
+                        <div class="mc-overlay"></div>
+                    </div>
+                </div>
+                <div class="mc-slide">
+                    <div class="mc-img-wrap">
+                        <img src="MUNNUDI/5.jpg" alt="Munnudi IMG 5" class="mc-img" onerror="this.src='A3-1.jpg'">
+                        <div class="mc-overlay"></div>
+                    </div>
+                </div>
+                <div class="mc-slide">
+                    <div class="mc-img-wrap">
+                        <img src="MUNNUDI/6.jpg" alt="Munnudi IMG 6" class="mc-img" onerror="this.src='A3-1.jpg'">
+                        <div class="mc-overlay"></div>
+                    </div>
+                </div>
+
+                <!-- Arrows (appear on hover) -->
+                <button class="mc-arrow mc-prev" id="mcPrev" aria-label="Previous"><i
+                        class="fa-solid fa-chevron-left"></i></button>
+                <button class="mc-arrow mc-next" id="mcNext" aria-label="Next"><i
+                        class="fa-solid fa-chevron-right"></i></button>
+
+                <!-- Dots -->
+                <div class="mc-dots" id="mcDots">
+                    <button class="mc-dot active" data-idx="0"></button>
+                    <button class="mc-dot" data-idx="1"></button>
+                    <button class="mc-dot" data-idx="2"></button>
+                    <button class="mc-dot" data-idx="3"></button>
+                    <button class="mc-dot" data-idx="4"></button>
+                    <button class="mc-dot" data-idx="5"></button>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 5rem;">
+                <a href="index.html#gallery" class="gallery-cta"><span data-t="btn_view_gallery">WANNA SEE MORE CLICKS?
+                        CLICK HERE</span> <i class="fa-solid fa-camera"></i></a>
+            </div>
+        </div>
+
+        <!-- 2. 1ST ANNIVERSARY -->
+        <div class="timeline-item right reveal-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <div class="event-header">
+                    <div class="event-header-inner">
+                        <p class="event-tag">1ST ANNIVERSARY</p>
+                        <h2 class="event-title" data-t="u_event2_title">VARSHIKOTSAVA</h2>
+                        <span class="event-date" data-t="u_event2_date">23 March, 2025</span>
+                    </div>
+                </div>
+                <div class="event-divider"></div>
+                <div class="event-body">
+                    <span data-t="u_event2_text">Team Kalabhi, Mangalore presented the play 'Pursana Pugge' as part of
+                        the first anniversary celebration.</span>
+                </div>
+            </div>
+            <div class="event-image-container">
+                <img src="gallery_1.png" alt="1st Anniversary" class="event-img" loading="lazy">
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="index.html#gallery" class="gallery-cta"><span data-t="btn_view_gallery">WANNA SEE MORE
+                            CLICKS? CLICK HERE</span> <i class="fa-solid fa-camera"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 2ND ANNIVERSARY -->
+        <div class="timeline-item left reveal-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <div class="event-header">
+                    <div class="event-header-inner">
+                        <p class="event-tag">2ND ANNIVERSARY</p>
+                        <h2 class="event-title" data-t="u_event3_title">VARSHIKOTSAVA</h2>
+                        <span class="event-date" data-t="u_event3_date">28 February, 2026</span>
+                    </div>
+                </div>
+                <div class="event-divider"></div>
+                <div class="event-body">
+                    <span data-t="u_event3_text">Mandara Kids Team brought joy with the performance 'Kuni Kuni
+                        Navile'.</span>
+                </div>
+            </div>
+            <div class="event-image-container">
+                <img src="kuni_kuni_navile_play_1774001389463.png" alt="2nd Anniversary" class="event-img"
+                    loading="lazy">
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="index.html#gallery" class="gallery-cta"><span data-t="btn_view_gallery">VIEW FULL
+                            GALLERY</span> <i class="fa-solid fa-camera"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ OUR PROGRAMMES SUBSECTION ═══ -->
+    <div class="programmes-section"
+        style="position:relative; z-index:10; max-width:1100px; margin: 0 auto 12rem; padding: 0 2rem;">
+
+        <!-- Section Header -->
+        <div style="text-align:center; margin-bottom:5rem;">
+            <p
+                style="font-size:0.7rem; letter-spacing:0.4em; color:rgba(212,163,115,0.5); font-family:'Plus Jakarta Sans',sans-serif; margin-bottom:1rem;">
+                OUR PROGRAMMES</p>
+            <h2
+                style="font-family:'Cinzel',serif; font-size:clamp(1.5rem,4vw,2.5rem); letter-spacing:0.2em; color:#F5F5F5; margin:0 0 1.5rem;">
+                WHAT WE CELEBRATE</h2>
+            <div
+                style="width:60px; height:1px; background:linear-gradient(to right,transparent,#D4A373,transparent); margin:0 auto;">
+            </div>
+        </div>
+
+        <!-- Programme Cards Grid -->
+        <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(440px,1fr)); gap:3rem;">
+
+            <!-- ── MUNNUDI CARD (empty placeholder) ── -->
+            <div class="prog-card">
+                <div class="prog-card-top">
+                    <div>
+                        <p class="prog-tag">INAUGURAL PROGRAMME</p>
+                        <h3 class="prog-title">MUNNUDI</h3>
+                        <span class="prog-kn">ಮುನ್ನುಡಿ</span>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- FOOTER FLARE -->
+    <div style="height: 6rem;"></div>
+
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const carousel = document.getElementById('munnudiCarousel');
+            const slides = carousel ? carousel.querySelectorAll('.mc-slide') : [];
+            const dots = carousel ? carousel.querySelectorAll('.mc-dot') : [];
+            const prevBtn = document.getElementById('mcPrev');
+            const nextBtn = document.getElementById('mcNext');
+
+            if (!carousel || slides.length === 0) return;
+
+            let current = 0;
+            let timer = null;
+            let paused = false;
+
+            function goTo(idx) {
+                slides[current].classList.remove('active');
+                dots[current].classList.remove('active');
+                current = (idx + slides.length) % slides.length;
+                slides[current].classList.add('active');
+                dots[current].classList.add('active');
+            }
+
+            function startAuto() {
+                clearInterval(timer);
+                timer = setInterval(() => { if (!paused) goTo(current + 1); }, 3500);
+            }
+
+            prevBtn.addEventListener('click', e => { e.stopPropagation(); goTo(current - 1); startAuto(); });
+            nextBtn.addEventListener('click', e => { e.stopPropagation(); goTo(current + 1); startAuto(); });
+
+            dots.forEach(dot => {
+                dot.addEventListener('click', e => {
+                    e.stopPropagation();
+                    goTo(parseInt(dot.getAttribute('data-idx')));
+                    startAuto();
+                });
+            });
+
+            carousel.addEventListener('mouseenter', () => paused = true);
+            carousel.addEventListener('mouseleave', () => paused = false);
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'ArrowLeft') goTo(current - 1);
+                if (e.key === 'ArrowRight') goTo(current + 1);
+            });
+
+            let touchX = 0;
+            carousel.addEventListener('touchstart', e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+            carousel.addEventListener('touchend', e => {
+                const delta = touchX - e.changedTouches[0].clientX;
+                if (Math.abs(delta) > 40) { goTo(delta > 0 ? current + 1 : current - 1); startAuto(); }
+            }, { passive: true });
+
+            startAuto();
+        });
+    </script>
+
+    <style>
+        /* ── PROGRAMME CARDS ── */
+        .prog-card {
+            background: #121212;
+            border: 1px solid rgba(212, 163, 115, 0.12);
+            border-radius: 16px;
+            padding: 3rem 2.8rem;
+            transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+            overflow: hidden;
+            text-align: center !important;
+        }
+
+        .prog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #D4A373, transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .prog-card:hover {
+            border-color: rgba(212, 163, 115, 0.35);
+            transform: translateY(-6px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(212, 163, 115, 0.06);
+        }
+
+        .prog-card:hover::before {
+            opacity: 1;
+        }
+
+        .prog-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .prog-number {
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: rgba(212, 163, 115, 0.15);
+            line-height: 1;
+            font-weight: 600;
+            flex-shrink: 0;
+            transition: color 0.4s ease;
+        }
+
+        .prog-card:hover .prog-number {
+            color: rgba(212, 163, 115, 0.35);
+        }
+
+        .prog-tag {
+            font-size: 0.65rem;
+            letter-spacing: 0.3em;
+            color: #D4A373;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0 0 0.5rem;
+            font-weight: 700;
+        }
+
+        .prog-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: #F5F5F5;
+            margin: 0 0 0.4rem;
+            letter-spacing: 0.1em;
+        }
+
+        .prog-kn {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            color: rgba(212, 163, 115, 0.6);
+            font-size: 1rem;
+        }
+
+        .prog-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, rgba(212, 163, 115, 0.2), transparent);
+            margin-bottom: 1.8rem;
+        }
+
+        .prog-body {
+            color: rgba(245, 245, 245, 0.65);
+            line-height: 1.85;
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .prog-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .prog-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+
+        .prog-meta-label {
+            font-size: 0.6rem;
+            letter-spacing: 0.25em;
+            color: #D4A373;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+        }
+
+        .prog-meta-value {
+            font-size: 0.9rem;
+            color: rgba(245, 245, 245, 0.8);
+            font-family: 'Lora', serif;
+        }
+
+        @media (max-width: 768px) {
+            .prog-meta-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .programmes-section>div:last-child {
+                grid-template-columns: 1fr !important;
+            }
+        }
+    </style>
+</body>
+
+</html>

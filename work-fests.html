@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FESTS | DHAMANI TEKKATE</title>
+    <!-- THEATRICAL FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css?v=COMPACT_FINAL">
+    <style>
+        :root {
+            --fest-bg: #0B0B0B;
+            --fest-text: #F5F5F5;
+            --fest-gold: #D4A373;
+            --fest-card-bg: #121212;
+        }
+
+        body.fests-page {
+            background: var(--fest-bg);
+            color: var(--fest-text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        /* --- THEATRICAL BACKGROUND ELEMENTS --- */
+        .fest-canvas {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background: radial-gradient(circle at top, rgba(212, 163, 115, 0.08) 0%, transparent 70%);
+        }
+
+        /* Particles */
+        .gold-particles {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            mix-blend-mode: overlay;
+        }
+
+        /* --- HEADER SECTION --- */
+        .fest-header {
+            padding: 12rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .fest-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            color: var(--fest-gold);
+            letter-spacing: 0.4em;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .fest-subtitle {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            color: var(--fest-text);
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        /* --- TIMELINE --- */
+        .timeline-wrapper {
+            position: relative;
+            max-width: 1100px;
+            margin: 4rem auto 15rem;
+            padding: 2rem;
+            z-index: 10;
+        }
+
+        .timeline-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, var(--fest-gold), transparent);
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px var(--fest-gold);
+        }
+
+        .timeline-item {
+            margin-bottom: 12rem;
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            --deviation: 0;
+            --abs-deviation: 0;
+        }
+
+        .timeline-card {
+            width: 100%;
+            max-width: 480px;
+            background: var(--fest-card-bg);
+            border: 1px solid rgba(212, 163, 115, 0.12);
+            border-radius: 16px;
+            padding: 2.8rem;
+            position: relative;
+            /* Scroll Motion */
+            transform: scale(calc(1 - var(--abs-deviation) * 0.1)) translateY(calc(var(--deviation) * 50px));
+            opacity: calc(1 - var(--abs-deviation) * 0.7);
+            transition: border-color 0.5s ease, transform 0.2s linear, box-shadow 0.5s ease, opacity 0.4s ease;
+
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            text-align: center !important;
+            will-change: transform, opacity;
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #D4A373, transparent);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .timeline-card:hover {
+            border-color: rgba(212, 163, 115, 0.35);
+            /* Transform is influenced by scroll but we can add hover lift */
+            box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 0 0 30px rgba(212, 163, 115, 0.06);
+        }
+
+        .timeline-card:hover::before {
+            opacity: 1;
+        }
+
+        .event-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .event-header-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .event-tag {
+            font-size: 0.75rem;
+            letter-spacing: 0.3em;
+            color: #D4A373;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            margin: 0 0 0.5rem;
+        }
+
+        .event-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2rem;
+            color: #F5F5F5;
+            margin: 0 0 0.5rem;
+            letter-spacing: 0.08em;
+        }
+
+        .event-date {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 1rem;
+            color: rgba(212, 163, 115, 0.6);
+            display: block;
+        }
+
+        .event-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, rgba(212, 163, 115, 0.15), transparent);
+            margin: 1.4rem 0;
+        }
+
+        .event-body {
+            line-height: 1.8;
+            font-size: 1.05rem;
+            color: rgba(245, 245, 245, 0.65);
+        }
+
+        .event-image-container {
+            width: 45%;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            transition: all 0.5s ease;
+        }
+
+        .event-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            filter: grayscale(0.5);
+            transition: all 0.8s ease;
+        }
+
+        .event-image-container:hover .event-img {
+            filter: grayscale(0);
+            transform: scale(1.1);
+        }
+
+        .timeline-item.left {
+            justify-content: flex-start;
+        }
+
+        .timeline-item.right {
+            justify-content: flex-end;
+        }
+
+        .timeline-item.left .event-image-container {
+            position: absolute;
+            right: 0;
+        }
+
+        .timeline-item.right .event-image-container {
+            position: absolute;
+            left: 0;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 2.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--fest-gold);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            box-shadow: 0 0 15px var(--fest-gold);
+        }
+
+        @media (max-width: 900px) {
+            .timeline-line {
+                left: 20px;
+            }
+
+            .timeline-dot {
+                left: 20px;
+            }
+
+            .timeline-card {
+                width: calc(100% - 60px);
+                margin-left: 60px;
+                max-width: 100%;
+            }
+
+            .timeline-item.left,
+            .timeline-item.right {
+                justify-content: flex-start;
+            }
+
+            .event-image-container {
+                position: relative !important;
+                width: 100% !important;
+                margin-top: 1.5rem;
+            }
+
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 8rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="fests-page smooth-scroll inner-page">
+    <div class="scroll-thread"></div>
+    <div class="cursor-spotlight"></div>
+    <div class="page-transition-overlay"></div>
+    <div class="fest-canvas"></div>
+    <div class="gold-particles"></div>
+    <div class="noise-overlay"></div>
+
+    <!-- NAVIGATION RETURN -->
+    <div style="position:fixed; top:2rem; left:2rem; z-index:100;">
+        <a href="index.html#works" class="btn-theatrical"
+            style="padding: 0.8rem 1.4rem; font-size: 0.75rem; background: rgba(0,0,0,0.6); border-color: var(--fest-gold); color: var(--fest-gold);">
+            <i class="fa-solid fa-arrow-left"></i> <span data-t="nav_home">BACK</span>
+        </a>
+    </div>
+
+    <!-- TOP SECTION -->
+    <div class="fest-header">
+        <h1 class="fest-title reveal-blur" data-t="work_fests">FESTS</h1>
+        <span class="fest-subtitle">Our Journey Across National Play Festivals</span>
+    </div>
+
+    <!-- TIMELINE SECTION -->
+    <div class="timeline-wrapper">
+        <div class="timeline-line"></div>
+
+        <!-- 1. BAHUROOPI -->
+        <div class="timeline-item left reveal-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <div class="event-header">
+                    <div class="event-header-inner">
+                        <p class="event-tag">NATIONAL THEATRE FESTIVAL</p>
+                        <h2 class="event-title">BAHUROOPI 2026</h2>
+                        <span class="event-date">Rangayana, Mysore</span>
+                    </div>
+                </div>
+                <div class="event-divider"></div>
+                <div class="event-body">
+                    <span>Performance of 'Soorya Chandra' at one of India's most prestigious annual theatre
+                        festivals.</span>
+                </div>
+            </div>
+            <div class="event-image-container">
+                <img src="surya_chandra_play_1774001484526.png" alt="Bahuroopi" class="event-img" loading="lazy"
+                    onerror="this.src='A3-1.jpg'">
+            </div>
+        </div>
+
+        <!-- 2. ALVA'S NUDISIRI -->
+        <div class="timeline-item right reveal-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <div class="event-header">
+                    <div class="event-header-inner">
+                        <p class="event-tag">CULTURAL MEGA EVENT</p>
+                        <h2 class="event-title">ALVA'S NUDISIRI</h2>
+                        <span class="event-date">Vidyagiri, Moodbidri</span>
+                    </div>
+                </div>
+                <div class="event-divider"></div>
+                <div class="event-body">
+                    <span>Bringing 'Soorya Banda' to the grand stage of Alva's Nudisiri, celebrating the rich heritage
+                        of Kannada literature and arts.</span>
+                </div>
+            </div>
+            <div class="event-image-container">
+                <img src="kuni_kuni_navile_play_1774001389463.png" alt="Alvas Nudisiri" class="event-img" loading="lazy"
+                    onerror="this.src='A3-1.jpg'">
+            </div>
+        </div>
+
+        <!-- 3. DHARWAD RANGOTSAVA -->
+        <div class="timeline-item left reveal-up">
+            <div class="timeline-dot"></div>
+            <div class="timeline-card">
+                <div class="event-header">
+                    <div class="event-header-inner">
+                        <p class="event-tag">REGIONAL THEATRE FEST</p>
+                        <h2 class="event-title">DHARWAD RANGOTSAVA</h2>
+                        <span class="event-date">Dharwad</span>
+                    </div>
+                </div>
+                <div class="event-divider"></div>
+                <div class="event-body">
+                    <span>An intense presentation of shadows and movement capturing the essence of the northern
+                        Karnataka theatre lovers.</span>
+                </div>
+            </div>
+            <div class="event-image-container">
+                <img src="W 1.png" alt="Dharwad Fest" class="event-img" loading="lazy"
+                    onerror="this.src='gallery_1.png'">
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER FLARE -->
+    <div style="text-align: center; margin: 10rem 0 5rem;">
+        <a href="index.html#gallery" class="gallery-cta"><span data-t="btn_view_gallery">WANNA SEE MORE CLICKS? CLICK
+                HERE</span> <i class="fa-solid fa-camera"></i></a>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

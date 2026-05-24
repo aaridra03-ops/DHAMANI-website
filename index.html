@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHAMANI TEKKATE | Cinematic Theatre Collective</title>
+    <!-- THEATRICAL FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css?v=COMPACT_FINAL">
+</head>
+
+<body>
+    <!-- CINEMATIC INTRO RITUAL -->
+    <div class="intro-ritual-overlay" id="intro-ritual">
+        <video id="intro-video" playsinline muted preload="auto" autoplay>
+            <source src="INTRO3.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div class="scroll-thread"></div>
+    <div class="cursor-spotlight"></div>
+    <div class="page-transition-overlay"></div>
+    <div class="vignette-overlay"></div>
+
+    <!-- VERTICAL PILL NAVBAR -->
+    <nav class="navbar-fixed">
+        <div class="lang-toggle">
+            <button id="lang-en" class="lang-btn active">EN</button>
+            <span class="lang-divider">|</span>
+            <button id="lang-kn" class="lang-btn">KN</button>
+        </div>
+        <div class="nav-links">
+            <a href="#home" class="active">
+                <div class="nav-dot"></div>
+                <div class="nav-content"><span class="nav-symbol"><i class="fa-solid fa-masks-theater"></i></span><span
+                        class="nav-text" data-t="home_brand">DHAMANI</span><span class="nav-dash">-</span></div>
+            </a>
+            <a href="#dates">
+                <div class="nav-dot"></div>
+                <div class="nav-content"><span class="nav-symbol"><i class="fa-solid fa-calendar-days"></i></span><span
+                        class="nav-text" data-t="nav_dates">DATES</span><span class="nav-dash">-</span></div>
+            </a>
+            <a href="#works">
+                <div class="nav-dot"></div>
+                <div class="nav-content"><span class="nav-symbol"><i class="fa-solid fa-clapperboard"></i></span><span
+                        class="nav-text" data-t="nav_works">WORKS</span><span class="nav-dash">-</span></div>
+            </a>
+            <a href="#gallery">
+                <div class="nav-dot"></div>
+                <div class="nav-content"><span class="nav-symbol"><i class="fa-solid fa-images"></i></span><span
+                        class="nav-text" data-t="nav_gallery">GALLERY</span><span class="nav-dash">-</span></div>
+            </a>
+            <a href="#about">
+                <div class="nav-dot"></div>
+                <div class="nav-content"><span class="nav-symbol"><i
+                            class="fa-solid fa-feather-pointed"></i></span><span class="nav-text"
+                        data-t="nav_about">ABOUT</span><span class="nav-dash">-</span></div>
+            </a>
+            <a href="#press">
+                <div class="nav-dot"></div>
+                <div class="nav-content"><span class="nav-symbol"><i class="fa-solid fa-newspaper"></i></span><span
+                        class="nav-text" data-t="nav_press">CUTTINGS</span><span class="nav-dash">-</span></div>
+            </a>
+            <a href="#team">
+                <div class="nav-dot"></div>
+                <div class="nav-content"><span class="nav-symbol"><i class="fa-solid fa-users"></i></span><span
+                        class="nav-text" data-t="nav_team">TEAM</span><span class="nav-dash">-</span></div>
+            </a>
+            <a href="#connect">
+                <div class="nav-dot"></div>
+                <div class="nav-content"><span class="nav-symbol"><i
+                            class="fa-solid fa-envelope-open-text"></i></span><span class="nav-text"
+                        data-t="nav_connect">CONNECT</span><span class="nav-dash">-</span></div>
+            </a>
+        </div>
+    </nav>
+
+    <!-- Announcements Removed -->
+
+    <section id="home" class="hero reveal-scale active">
+        <h1 class="hero-brand" data-t="home_brand">DHAMANI</h1>
+        <h2 class="hero-tagline" data-t="home_tagline">Dhwani-Mana-Niya</h2>
+    </section>
+
+    <section id="dates" class="section reveal-up">
+        <div class="section-stage-light"></div>
+        <h2 class="section-title" data-t="sec_dates">OUR DATES</h2>
+
+        <div class="dates-display-stage">
+            <!-- CALENDAR VIEW (NOW THE ONLY VIEW) -->
+            <div id="calendar-view" class="view-stage active">
+                <div class="theatre-calendar-container">
+                    <!-- CALENDAR HEADER -->
+                    <div class="calendar-header">
+                        <button class="cal-nav-btn prev-month"><i class="fa-solid fa-chevron-left"></i></button>
+                        <h3 id="current-month-year">MARCH 2026</h3>
+                        <button class="cal-nav-btn next-month"><i class="fa-solid fa-chevron-right"></i></button>
+                    </div>
+
+                    <div class="calendar-main-content">
+                        <!-- LEFT SIDE: GRID -->
+                        <div class="calendar-grid-side">
+                            <div class="calendar-weekday-labels">
+                                <span data-t="cal_sun">SUN</span><span data-t="cal_mon">MON</span><span
+                                    data-t="cal_tue">TUE</span><span data-t="cal_wed">WED</span><span
+                                    data-t="cal_thu">THU</span><span data-t="cal_fri">FRI</span><span
+                                    data-t="cal_sat">SAT</span>
+                            </div>
+                            <div id="calendar-days-grid" class="calendar-days-grid">
+                                <!-- Days injected by JS -->
+                            </div>
+                        </div>
+
+                        <!-- RIGHT SIDE: INFO TICKET -->
+                        <div class="calendar-info-panel">
+                            <div class="info-ticket">
+                                <span class="ticket-flare"></span>
+                                <h4 class="ticket-label" data-t="cal_on_this_day">ON THIS DAY</h4>
+                                <div id="calendar-info-content" class="ticket-content">
+                                    <p class="ticket-placeholder" data-t="cal_select_date">Select a date to reveal the
+                                        story.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="works" class="section reveal-up">
+        <div class="section-stage-light"></div>
+        <h2 class="section-title reveal-blur" data-t="sec_works">OUR WORKS!</h2>
+        <div class="works-container stagger-container">
+            <a href="work-chiguru.html" class="work-card">
+                <div class="work-image-box"><img src="chiguru_main.jpg" alt="Chiguru" class="work-img" loading="lazy">
+                </div>
+                <div class="work-info">
+                    <h3 style="line-height:1.2; margin-bottom:0;" data-t="work_chiguru">CHIGURU<br><span
+                            style="font-size:0.5em; font-family:'Plus Jakarta Sans', sans-serif; letter-spacing:0.1em; opacity:0.8;">BAANIGONDU
+                            CHAPPARA</span></h3>
+                </div>
+            </a>
+            <a href="work-uthsava.html" class="work-card">
+                <div class="work-image-box"><img src="A3-1.jpg" alt="Uthsava"
+                        class="work-img" loading="lazy"></div>
+                <div class="work-info">
+                    <h3 data-t="work_uthsava">UTHSAVA</h3>
+                </div>
+            </a>
+
+            <a href="work-shorts.html" class="work-card">
+                <div class="work-image-box"><img src="dimsaal_pictures.png" alt="Short Films" class="work-img"
+                        onerror="this.src='gallery_1.png'" loading="lazy"></div>
+                <div class="work-info">
+                    <h3 data-t="work_shorts">SHORT FILMS</h3>
+                </div>
+            </a>
+
+            <a href="work-fests.html" class="work-card">
+                <div class="work-image-box"><img src="MUNNUDI/3.jpg" alt="Fests" class="work-img" loading="lazy"></div>
+                <div class="work-info">
+                    <h3 data-t="work_fests">FESTS</h3>
+                </div>
+            </a>
+        </div>
+    </section>
+
+
+
+
+    <section id="gallery" class="section reveal-up">
+        <div class="section-stage-light"></div>
+        <h2 class="section-title" data-t="sec_gallery">THE GALLERY</h2>
+        
+        <!-- Category: Soorya Banda -->
+        <div class="gallery-category-container">
+            <h3 class="gallery-category-title" data-t="sb_title">SOORYA BANDA</h3>
+            <div class="gallery-grid stagger-container" id="gallery-sb-grid">
+                <div class="gallery-item-card" data-caption="Soorya Banda - Performance Pic 1">
+                    <div class="gallery-image-box">
+                        <img src="Photos/IMG-20240717-WA0064.jpg" class="gallery-img" loading="lazy" alt="Soorya Banda">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">17.07.2024</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card" data-caption="Soorya Banda - Performance Pic 2">
+                    <div class="gallery-image-box">
+                        <img src="Photos/IMG-20240718-WA0054.jpg" class="gallery-img" loading="lazy" alt="Soorya Banda">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">18.07.2024</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card" data-caption="Soorya Banda - Performance Pic 3">
+                    <div class="gallery-image-box">
+                        <img src="Photos/IMG-20240719-WA0002.jpg" class="gallery-img" loading="lazy" alt="Soorya Banda">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">19.07.2024</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Banda - Performance Pic 4">
+                    <div class="gallery-image-box">
+                        <img src="Photos/IMG-20250406-WA0024.jpg" class="gallery-img" loading="lazy" alt="Soorya Banda">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">05.04.2025</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-actions">
+                <button class="btn-view-more" data-target="gallery-sb-grid" data-t="btn_view_more">VIEW MORE</button>
+
+            </div>
+        </div>
+
+        <!-- Category: Soorya Chandra -->
+        <div class="gallery-category-container" style="margin-top: 6rem;">
+            <h3 class="gallery-category-title" data-t="sc_title">SOORYA CHANDRA</h3>
+            <div class="gallery-grid stagger-container" id="gallery-sc-grid">
+                <div class="gallery-item-card" data-caption="Soorya Chandra - Photo 1">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.52%20PM.jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card" data-caption="Soorya Chandra - Photo 2">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.53%20PM%20(1).jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card" data-caption="Soorya Chandra - Photo 3">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.53%20PM%20(2).jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 4">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.53%20PM.jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 5">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.54%20PM%20(1).jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 6">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.54%20PM.jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 7">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.55%20PM%20(1).jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 8">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.55%20PM%20(2).jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 9">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.55%20PM.jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 10">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.56%20PM%20(1).jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 11">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.56%20PM%20(2).jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 12">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.56%20PM.jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 13">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.57%20PM%20(1).jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 14">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.57%20PM%20(2).jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item-card hidden-item" data-caption="Soorya Chandra - Photo 15">
+                    <div class="gallery-image-box">
+                        <img src="Soorya%20Chandra/WhatsApp%20Image%202026-05-21%20at%208.14.57%20PM.jpeg" class="gallery-img" loading="lazy" alt="Soorya Chandra">
+                        <div class="gallery-img-overlay">
+                            <span class="gallery-img-date">21.05.2026</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="gallery-actions">
+                <button class="btn-view-more" data-target="gallery-sc-grid" data-t="btn_view_more">VIEW MORE</button>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section reveal-up">
+        <div class="section-stage-light"></div>
+        <h2 class="section-title" data-t="sec_about">BEYOND THE STAGE</h2>
+        <p class="about-text"
+            style="max-width: 600px; text-align: center; color: var(--text-muted); font-size: 0.85rem; line-height: 1.8;"
+            data-t="about_content">
+            Dhamani Tekkate is more than a troupe; it is a theatrical pulse. We weave modern stagecraft with deep human
+            emotion to create performances that linger.
+        </p>
+    </section>
+
+    <!-- NEW SECTION: NEWSPAPER CUTTINGS (REPLICA RESTORED) -->
+    <section id="press" class="section reveal-up">
+        <div class="section-stage-light"></div>
+        <h2 class="section-title" data-t="sec_press">THE CUTTINGS</h2>
+        <div class="press-container stagger-container">
+            <div class="press-card reveal-blur">
+                <span class="press-date">DAILY HERALD | 2024</span>
+                <h3 class="press-headline" data-t="press_h1">"A VISUAL SYMPHONY IN LIGHT"</h3>
+                <p class="press-excerpt" data-t="press_p1">"Dhamani Thekkatte manages to bridge the gap between ancient
+                    ritual and modern urgency through 'Soorya Chandra'..."</p>
+            </div>
+            <div class="press-card reveal-blur" style="transform: rotate(2deg);">
+                <span class="press-date">METRO STAGE | 2023</span>
+                <h3 class="press-headline" data-t="press_h2">"REDEFINING REGIONAL DRAMA"</h3>
+                <p class="press-excerpt" data-t="press_p2">"Their approach to shadow play is unparalleled, transforming
+                    simple fabric and light into a celestial battleground..."</p>
+            </div>
+            <div class="press-card reveal-blur" style="transform: rotate(-1deg);">
+                <span class="press-date">THE ARTIST QUARTERLY | 2025</span>
+                <h3 class="press-headline" data-t="press_h3">"THE BREATH OF THE STAGE"</h3>
+                <p class="press-excerpt" data-t="press_p3">"What makes Dhamani unique is their collective silence. They
+                    let the movement do the preaching..."</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="team" class="section reveal-up">
+        <div class="section-stage-light"></div>
+        <h2 class="section-title" data-t="sec_team">OUR COLLECTIVE</h2>
+        <div class="humaan-wrapper">
+            <div class="humaan-grid stagger-container">
+                <!-- COLUMN 1: LEFT -->
+                <div class="humaan-col-1">
+                    <div class="team-card reveal-up">
+                        <img src="Sulochana.jpeg" alt="Sulochana" class="team-photo" loading="lazy">
+                        <div class="team-badges">
+                            <span class="badge-name name-amber" data-t="name_sulochana">Sulochana</span>
+                            <span class="badge-role" data-t="role_pres">President</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 2: CENTER -->
+                <div class="humaan-col-2">
+                    <div class="team-card reveal-up">
+                        <img src="Ranjth.jpeg" alt="Ranjith Shetty" class="team-photo" loading="lazy">
+                        <div class="team-badges">
+                            <span class="badge-name name-green" data-t="name_ranjith">Ranjith</span>
+                            <span class="badge-role" data-t="role_mem">Member</span>
+                        </div>
+                    </div>
+                    <div class="team-card reveal-up" style="margin-top: 4.5rem;">
+                        <img src="Shreesha (1).jpeg" alt="Shreesha Thekkatte" class="team-photo" loading="lazy">
+                        <div class="team-badges">
+                            <span class="badge-name name-gold" data-t="name_shreesha">Shreesha</span>
+                            <span class="badge-role" data-t="role_sec">Secretary</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMN 3: RIGHT -->
+                <div class="humaan-col-3">
+                    <div class="team-card reveal-up">
+                        <img src="Vijith.jpeg" alt="Vijith" class="team-photo" loading="lazy">
+                        <div class="team-badges">
+                            <span class="badge-name name-red" data-t="name_vijith">Vijith</span>
+                            <span class="badge-role" data-t="role_mem">Member</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="connect" class="section reveal-up">
+        <h2 class="section-title" data-t="sec_connect">CONNECT WITH US</h2>
+
+        <div class="connect-tri-layout reveal-blur">
+            <!-- LEFT: DONATION CARD -->
+            <div class="tri-col donation-col">
+                <div class="support-premium-card compact-donation"
+                    style="margin-top: -8rem; padding-top: 5rem; padding-bottom: 5rem; min-height: 650px; display: flex; flex-direction: column; justify-content: center;">
+                    <div class="support-header" style="margin-bottom: 3.5rem;">
+                        <h3 data-t="donate_title"
+                            style="font-size: 2rem; letter-spacing: 0.1em; margin-bottom: 1.5rem;">JOIN OUR JOURNEY</h3>
+                        <p data-t="donate_desc" style="font-size:1.1rem; line-height: 1.7; opacity: 0.9;">Support the
+                            dreams of our performers. Every contribution keeps the stage alive.</p>
+                    </div>
+
+                    <div class="support-qr-box"
+                        style="padding: 2.5rem; margin-bottom: 4rem; background: #fffcf5; border-radius: 12px;">
+                        <img src="donation-qr.jpg" alt="Donation QR" class="support-qr-image"
+                            style="width: 240px; height: 240px; mix-blend-mode: multiply; margin-bottom: 1.5rem;">
+                        <span class="upi-id" style="font-size: 1.1rem; color: #301b16; font-weight: 700;">UPI ID:
+                            8073998079@kbl</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MIDDLE: CONTACT DETAILS -->
+            <div class="tri-col contact-col">
+                <div class="contact-vertical-list">
+                    <a href="tel:+918073998079" class="btn-theatrical contact-btn"><i class="fa-solid fa-phone"></i>
+                        80739 98079</a>
+                    <a href="mailto:dhamanithekkatte@gmail.com" class="btn-theatrical contact-btn"><i
+                            class="fa-solid fa-envelope"></i> dhamanithekkatte@gmail.com</a>
+                    <a href="https://www.instagram.com/dhamanithekkatte" target="_blank"
+                        class="btn-theatrical contact-btn"><i class="fa-brands fa-instagram"></i> <span
+                            data-t="btn_instagram">INSTAGRAM</span></a>
+                </div>
+            </div>
+
+            <!-- RIGHT: COLLABORATORS -->
+            <div class="tri-col collab-col">
+                <span class="collab-label">OUR COLLABORATORS</span>
+                <div class="collab-grid">
+                     <div class="collab-frame"><img src="logos/IMG-20240203-WA0005.jpg" alt="Collaborator 1" class="collab-img" loading="lazy"></div>
+                     <div class="collab-frame"><img src="logos/Layer 46.png" alt="Collaborator 2" class="collab-img" loading="lazy"></div>
+                     <div class="collab-frame"><img src="logos/Yashaswi [W].png" alt="Collaborator 3" class="collab-img" loading="lazy"></div>
+                     <div class="collab-frame"><img src="logos/eipngOZ41616.png" alt="Collaborator 4" class="collab-img" loading="lazy"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- EXIT DONATION POPUP -->
+    <div id="exit-popup" class="modal-overlay">
+        <div class="modal-card-unified donation-exit-card">
+            <button id="close-exit" class="modal-close" onclick="closePopup('exit-popup')">&times;</button>
+            <div class="exit-header">
+                <span class="exit-subtitle" data-t="exit_subtitle">A HUMBLE REQUEST</span>
+                <h2 class="exit-title" data-t="exit_title">SUPPORT OUR STAGE</h2>
+                <p class="exit-description" data-t="exit_desc">Your support keeps the flame alive.</p>
+            </div>
+
+            <div class="exit-qr-container">
+                <img src="donation-qr.jpg" alt="Donation QR" class="exit-qr-image">
+                <span class="exit-qr-label" data-t="exit_scan">[ SCAN TO DONATE ]</span>
+            </div>
+
+            <div class="exit-actions">
+                <button class="btn-theatrical exit-btn primary-exit" data-t="btn_sure"
+                    onclick="closePopup('exit-popup')">SURE!</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- GALLERY LIGHTBOX MODAL -->
+    <div id="lightbox-modal" class="lightbox-modal">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightbox-close">&times;</button>
+            <img class="lightbox-image" id="lightbox-img" src="" alt="Gallery Lightbox View">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
